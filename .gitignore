@@ -1,0 +1,7 @@
+node_modules/
+.env
+*.log
+uploads/
+firebase-service-account.json
+# ignoer config.env
+config.env
