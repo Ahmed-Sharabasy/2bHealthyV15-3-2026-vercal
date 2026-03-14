@@ -11,4 +11,7 @@ router
 router.route("/nutrition/:foodName").get(foodController.getFoodNutrition);
 router.route("/search").get(foodController.searchRecipesByIngredients);
 
+// test route
+router.route("/searchIngredient").get(foodController.searchIngredient);
+
 export default router;

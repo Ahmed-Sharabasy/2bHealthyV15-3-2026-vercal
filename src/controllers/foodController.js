@@ -69,3 +69,33 @@ export const getFoodNutritionWithImage = async (req, res) => {
       ?.amount,
   });
 };
+
+// get ingedient and its calories by name
+export const searchIngredient = async (req, res) => {
+  const { query } = req.query;
+
+  // Step 1: get the id
+  const searchResponse = await fetch(
+    `${BASE_URL}/food/ingredients/search?apiKey=${API_KEY}&query=${query}&number=1`,
+  );
+  const searchData = await searchResponse.json();
+  const ingredient = searchData.results[0];
+
+  // Step 2: get full info with nutrition
+  const infoResponse = await fetch(
+    `${BASE_URL}/food/ingredients/${ingredient.id}/information?apiKey=${API_KEY}&amount=100&unit=grams&addNutrition=true`,
+  );
+  const data = await infoResponse.json();
+
+  res.json({
+    id: data.id,
+    name: data.name,
+    image: `https://spoonacular.com/cdn/ingredients_500x500/${data.image}`,
+    calories: data.nutrition.nutrients.find((n) => n.name === "Calories")
+      ?.amount,
+    protein: data.nutrition.nutrients.find((n) => n.name === "Protein")?.amount,
+    carbs: data.nutrition.nutrients.find((n) => n.name === "Carbohydrates")
+      ?.amount,
+    fat: data.nutrition.nutrients.find((n) => n.name === "Fat")?.amount,
+  });
+};
