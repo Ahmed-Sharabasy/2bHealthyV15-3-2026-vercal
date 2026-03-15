@@ -9,9 +9,14 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-// ── Connect to MongoDB then start server ────────────────────
+// ── Connect to MongoDB then start server (local dev only) ───
 const startServer = async () => {
-  await connectDB();
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error("❌ Failed to connect to MongoDB:", err.message);
+    process.exit(1);
+  }
 
   const server = app.listen(env.PORT, () => {
     console.log(

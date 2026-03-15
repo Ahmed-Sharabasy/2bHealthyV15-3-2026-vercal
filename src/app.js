@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 if (env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-console.log("hi");
+
 
 // ── Static files (uploads) ──────────────────────────────────
 app.use("/uploads", express.static("uploads"));
